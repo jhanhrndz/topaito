@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tapaito — Estación de Auditoría Clínica y Privacidad Local</title>
+  <link rel="stylesheet" href="/ui/static/styles.css">
+  <script src="/ui/static/app.js" defer></script>
+</head>
+<body>
+  <!-- Banner permanente de alcance responsable (Mitigación R13 y R5) -->
+  <div class="disclaimer-banner" role="region" aria-label="Aviso de alcance técnico y privacidad">
+    <span class="disclaimer-badge">AVISO TÉCNICO</span>
+    <p class="disclaimer-text">
+      Aviso: Tapaito <strong>reduce la exposición de datos personales</strong> hacia proveedores en la nube mediante enmascarado reversible por sesión, pero ningún detector es infalible ni sustituye una revisión humana o legal. Revise el texto enmascarado antes de enviar.
+    </p>
+  </div>
+
+  <!-- Cabecera Institucional -->
+  <header class="station-header">
+    <div class="brand-block">
+      <div class="brand-mark" aria-hidden="true">⟦T⟧</div>
+      <div>
+        <div class="brand-title-row">
+          <h1 class="brand-title">Tapaito</h1>
+          <span class="brand-tag">Proxy OpenAI Local · 127.0.0.1</span>
+          <span id="health-pill" class="health-pill health-checking" title="Estado del servidor FastAPI local">Verificando nodo local…</span>
+        </div>
+        <p class="brand-subtitle">
+          Estación de Auditoría Clínica Colombiana — Detección multicapa (Regex DIAN + NER + Qwen3 4B) y reinserción tolerante
+        </p>
+      </div>
+    </div>
+
+    <div class="session-manager" role="group" aria-label="Gestión de sesión en memoria RAM">
+      <div class="session-field">
+        <label for="session-id-input" class="session-label">Sesión en RAM (TTL):</label>
+        <input
+          id="session-id-input"
+          type="text"
+          class="session-input"
+          value="sess-demo-1"
+          spellcheck="false"
+          autocomplete="off"
+          aria-label="Identificador de sesión actual"
+        >
+      </div>
+      <button id="btn-delete-session" type="button" class="btn btn-danger-outline" title="Invoca DELETE /v1/tapaito/session/{session_id}">
+        Borrar Sesión en Memoria (DELETE)
+      </button>
+    </div>
+  </header>
+
+  <main class="station-main">
+    <!-- Barra de Controles de Demo e Inspección -->
+    <section class="control-deck" aria-label="Controles de casos clínicos y modos de operación">
+      <div class="deck-top-row">
+        <div class="preset-group" role="group" aria-label="Selector de 4 casos clínicos sintéticos precargados">
+          <span class="deck-section-label">Casos Sintéticos Precargados (1 clic):</span>
+          <div class="preset-buttons">
+            <button type="button" class="preset-btn active" data-case="case1" id="preset-case1">
+              <span class="preset-num">Caso 1</span>
+              <span class="preset-name">Epicrisis Clínica Completa</span>
+              <span class="preset-meta">Modo Rápido · NIT DV DIAN + POS</span>
+            </button>
+            <button type="button" class="preset-btn" data-case="case2" id="preset-case2">
+              <span class="preset-num">Caso 2</span>
+              <span class="preset-name">Tutela + Residuo + Cuasi-ID</span>
+              <span class="preset-meta">Modo Estricto · Qwen3 4B</span>
+            </button>
+            <button type="button" class="preset-btn" data-case="case3" id="preset-case3">
+              <span class="preset-num">Caso 3</span>
+              <span class="preset-name">Mutación Hostil del LLM</span>
+              <span class="preset-meta">Reinserción Tolerante 100%</span>
+            </button>
+            <button type="button" class="preset-btn preset-btn-danger" data-case="case4" id="preset-case4">
+              <span class="preset-num">Caso 4</span>
+              <span class="preset-name">Bloqueo Fallar Cerrado (422)</span>
+              <span class="preset-meta">Modo Estricto · Cero fugas</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="deck-bottom-row">
+        <!-- Toggle Modo Rápido vs Estricto -->
+        <div class="mode-selector" role="radiogroup" aria-label="Modo de verificación de privacidad">
+          <span class="deck-section-label">Modo del Pipeline:</span>
+          <div class="mode-pills">
+            <button
+              type="button"
+              id="mode-rapido-btn"
+              class="mode-pill active"
+              data-mode="rapido"
+              aria-pressed="true"
+            >
+              <span class="mode-dot mode-dot-rapido"></span>
+              <span><strong>Rápido</strong> (Capas 1–2: Regex DIAN + NER)</span>
+            </button>
+            <button
+              type="button"
+              id="mode-estricto-btn"
+              class="mode-pill"
+              data-mode="estricto"
+              aria-pressed="false"
+            >
+              <span class="mode-dot mode-dot-estricto"></span>
+              <span><strong>Estricto</strong> (Capas 1–3: + Qwen3 4B Local · Fallar Cerrado)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Opciones de Simulación de Demo -->
+        <div class="simulation-options">
+          <div class="sim-field">
+            <label for="hostile-select" class="deck-section-label">Header Hostil (Prueba R2):</label>
+            <select id="hostile-select" class="sim-select" aria-label="Modo de mutación hostil del upstream mock">
+              <option value="">Estándar (Conserva ⟦TIPO_N⟧)</option>
+              <option value="case_and_brackets">Mutación: [persona_1], ⟦ cedula_1 ⟧, ((ORG_1))</option>
+              <option value="invented_and_missing">Faltante + Inventado (⟦PERSONA_99⟧) + Ambiguo</option>
+            </select>
+          </div>
+
+          <label class="sim-checkbox-label" title="Permite mostrar el bloqueo HTTP 422 en menos de 1 segundo durante la demo en vivo de 90s">
+            <input type="checkbox" id="toggle-force-422">
+            <span>Forzar simulación de bloqueo HTTP 422</span>
+          </label>
+
+          <label class="sim-checkbox-label" title="Usa respuestas deterministas locales si el servidor FastAPI no está disponible">
+            <input type="checkbox" id="toggle-offline-sim">
+            <span>Simular sin servidor</span>
+          </label>
+        </div>
+
+        <!-- Botones Principales de Acción -->
+        <div class="action-buttons">
+          <button type="button" id="btn-preview" class="btn btn-secondary">
+            1. Previsualizar Enmascarado (/preview)
+          </button>
+          <button type="button" id="btn-send-chat" class="btn btn-primary">
+            2. Enviar a IA y Reinsertar (/v1/chat/completions)
+          </button>
+        </div>
+      </div>
+
+      <!-- Barra de estado / feedback de operación -->
+      <div id="status-bar" class="status-bar" role="status" aria-live="polite">
+        <span id="status-indicator" class="status-dot status-idle"></span>
+        <span id="status-message">Listo. Seleccione un caso clínico sintético o edite el texto para inspeccionar el enmascarado.</span>
+      </div>
+    </section>
+
+    <!-- Vista de Pantalla Dividida en 3 Columnas -->
+    <section class="split-workspace" aria-label="Estación de trabajo en pantalla dividida de 3 columnas">
+      <!-- COLUMNA 1: Equipo Médico Local -->
+      <article class="panel-column" id="col-local">
+        <header class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-step-badge">COLUMNA 1 · EQUIPO MÉDICO LOCAL</span>
+            <h2 class="panel-title">Entrada Clínica e Inspección de Spans</h2>
+          </div>
+          <span class="panel-zone-tag zone-local">127.0.0.1 · Datos Originales</span>
+        </header>
+
+        <div class="panel-body">
+          <div class="field-header">
+            <label for="clinical-input" class="field-label">Nota clínica / tutela sintética (editable):</label>
+            <span id="char-counter" class="char-counter">0 caracteres</span>
+          </div>
+          <textarea
+            id="clinical-input"
+            class="clinical-textarea"
+            rows="6"
+            placeholder="Escriba o seleccione un caso clínico sintético..."
+          ></textarea>
+
+          <!-- Vista con resaltado por offsets (start..end) -->
+          <div class="subpanel">
+            <div class="subpanel-header">
+              <h3 class="subpanel-title">Entidades Detectadas por Offset (<code>start..end</code>)</h3>
+              <span id="entity-count-badge" class="counter-pill">0 entidades</span>
+            </div>
+
+            <div class="legend-bar" aria-label="Leyenda de capas y tipos de entidad">
+              <span class="legend-item"><kbd class="source-tag source-regex">regex</kbd> Capa 1 (DIAN/CO)</span>
+              <span class="legend-item"><kbd class="source-tag source-ner">ner</kbd> Capa 2 (spaCy)</span>
+              <span class="legend-item"><kbd class="source-tag source-llm">llm</kbd> Capa 3 (Qwen3 4B)</span>
+              <span class="legend-item"><kbd class="source-tag source-session">session</kbd> Barrido RAM</span>
+            </div>
+
+            <div id="highlighted-original" class="inspection-box" aria-live="polite">
+              <span class="empty-hint">Ejecute "Previsualizar" o "Enviar a IA" para resaltar los spans detectados sobre el texto original.</span>
+            </div>
+
+            <!-- Lista compacta de spans con offsets -->
+            <div id="entity-spans-list" class="spans-chip-list" aria-label="Detalle de spans detectados"></div>
+          </div>
+
+          <!-- Banner Ámbar de Advertencias de Cuasi-identificadores -->
+          <div id="warnings-container" class="warnings-banner hidden" role="alert">
+            <div class="warnings-header">
+              <span class="warnings-icon" aria-hidden="true">▲</span>
+              <strong>Advertencia de Cuasi-identificador / Contexto (R6):</strong>
+            </div>
+            <ul id="warnings-list" class="warnings-list"></ul>
+          </div>
+        </div>
+      </article>
+
+      <!-- COLUMNA 2: Lo que Recibe la Nube -->
+      <article class="panel-column" id="col-cloud">
+        <header class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-step-badge">COLUMNA 2 · FRONTERA DE SALIDA</span>
+            <h2 class="panel-title">Lo que Recibe el Proveedor (Nube / Upstream)</h2>
+          </div>
+          <span id="cloud-status-tag" class="panel-zone-tag zone-masked">Solo Tokens ⟦TIPO_N⟧</span>
+        </header>
+
+        <div class="panel-body">
+          <!-- Escudo Rojo de Bloqueo HTTP 422 (Fallar Cerrado CE5) -->
+          <div id="block-shield" class="block-shield hidden" role="alert">
+            <div class="shield-header">
+              <span class="shield-icon" aria-hidden="true">■</span>
+              <div>
+                <h3 class="shield-title">ENVÍO BLOQUEADO — FALLAR CERRADO: Ningún dato salió a la nube</h3>
+                <p id="shield-code" class="shield-code">HTTP 422 · TAPAITO_RESIDUO</p>
+              </div>
+            </div>
+            <p id="shield-message" class="shield-message">
+              Petición bloqueada en modo estricto: persisten posibles datos sensibles tras reenmascarado o el verificador local reportó un fallo.
+            </p>
+            <div class="shield-meta">
+              <span>Llamadas al upstream externo: <strong>0 (CERO)</strong></span>
+              <span>Registro en <code>audit.jsonl</code>: <strong>bloqueado (sin valores originales)</strong></span>
+            </div>
+          </div>
+
+          <!-- Texto Enmascarado (masked / masked_prompt) -->
+          <div class="subpanel">
+            <div class="subpanel-header">
+              <h3 class="subpanel-title">Prompt Enmascarado Enviado (<code>masked_prompt</code>)</h3>
+              <span id="masked-token-count" class="counter-pill">0 tokens</span>
+            </div>
+            <div id="masked-output" class="inspection-box mono-box" aria-live="polite">
+              <span class="empty-hint">Aquí se mostrará exactamente el payload con píldoras <code>⟦TIPO_N⟧</code> que sale hacia el modelo externo.</span>
+            </div>
+          </div>
+
+          <!-- Respuesta Cruda del Upstream antes de reinsertar -->
+          <div class="subpanel">
+            <div class="subpanel-header">
+              <h3 class="subpanel-title">Respuesta Cruda del Upstream (<code>raw_upstream_response</code>)</h3>
+              <span id="upstream-model-badge" class="counter-pill">tapaito-mock</span>
+            </div>
+            <div id="raw-upstream-output" class="inspection-box mono-box" aria-live="polite">
+              <span class="empty-hint">Al ejecutar el paso 2 (<code>/v1/chat/completions</code>), verá aquí la respuesta del LLM antes de reinsertar los datos en memoria local.</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- COLUMNA 3: Respuesta Final Reinsertada + Informe -->
+      <article class="panel-column" id="col-restored">
+        <header class="panel-header">
+          <div class="panel-title-group">
+            <span class="panel-step-badge">COLUMNA 3 · RETORNO AL PROFESIONAL</span>
+            <h2 class="panel-title">Respuesta Reinsertada e Informe de Reinserción</h2>
+          </div>
+          <span class="panel-zone-tag zone-restored">Reinserción Local en RAM</span>
+        </header>
+
+        <div class="panel-body">
+          <!-- Respuesta Final con valores restaurados resaltados en verde -->
+          <div class="subpanel">
+            <div class="subpanel-header">
+              <h3 class="subpanel-title">Respuesta Final para el Médico (<code>choices[0].message.content</code>)</h3>
+              <span id="restoration-rate-badge" class="counter-pill rate-pill-neutral">Tasa: —</span>
+            </div>
+            <div id="restored-output" class="inspection-box restored-box" aria-live="polite">
+              <span class="empty-hint">La respuesta final con los nombres, cédulas y NIT restaurados localmente aparecerá aquí resaltada en verde.</span>
+            </div>
+          </div>
+
+          <!-- Tarjeta del Informe de Reinserción (reinsertion_report) -->
+          <div class="subpanel report-card" aria-label="Informe detallado de reinserción de tokens">
+            <div class="subpanel-header">
+              <h3 class="subpanel-title">Informe de Reinserción (<code>reinsertion_report</code>)</h3>
+              <span id="report-summary-label" class="report-summary-label">Sin ejecutar</span>
+            </div>
+
+            <div class="report-metrics-grid">
+              <div class="report-metric metric-restored">
+                <span class="metric-label">Restaurados</span>
+                <strong id="count-restaurados" class="metric-value">0</strong>
+                <div id="chips-restaurados" class="metric-chips"></div>
+              </div>
+              <div class="report-metric metric-missing">
+                <span class="metric-label">Faltantes</span>
+                <strong id="count-faltantes" class="metric-value">0</strong>
+                <div id="chips-faltantes" class="metric-chips"></div>
+              </div>
+              <div class="report-metric metric-unknown">
+                <span class="metric-label">Desconocidos</span>
+                <strong id="count-desconocidos" class="metric-value">0</strong>
+                <div id="chips-desconocidos" class="metric-chips"></div>
+              </div>
+              <div class="report-metric metric-ambiguous">
+                <span class="metric-label">Ambiguos</span>
+                <strong id="count-ambiguos" class="metric-value">0</strong>
+                <div id="chips-ambiguos" class="metric-chips"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desglose de Latencias por Capa (latency_ms) -->
+          <div class="subpanel latency-card" aria-label="Desglose de latencias por capa">
+            <div class="subpanel-header">
+              <h3 class="subpanel-title">Desglose de Latencia (<code>latency_ms</code>)</h3>
+              <span id="lat-total-badge" class="counter-pill">Total: 0.0 ms</span>
+            </div>
+            <div class="latency-grid">
+              <div class="latency-item">
+                <span class="latency-name">Capas 1–2 (Regex + NER)</span>
+                <strong id="lat-l12" class="latency-val">— ms</strong>
+              </div>
+              <div class="latency-item">
+                <span class="latency-name">Capa 3 (Qwen3 4B Local)</span>
+                <strong id="lat-l3" class="latency-val">— ms</strong>
+              </div>
+              <div class="latency-item">
+                <span class="latency-name">Upstream LLM</span>
+                <strong id="lat-upstream" class="latency-val">— ms</strong>
+              </div>
+              <div class="latency-item latency-item-total">
+                <span class="latency-name">Tiempo Total E2E</span>
+                <strong id="lat-total" class="latency-val">— ms</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- Panel Inferior: Audit Log Local JSONL en Vivo (/v1/tapaito/audit) -->
+    <section class="audit-section" aria-label="Registro de auditoría local sin valores originales">
+      <header class="audit-header">
+        <div class="audit-title-group">
+          <div class="audit-title-row">
+            <h2 class="audit-title">Registro de Auditoría Local en Vivo (<code>GET /v1/tapaito/audit</code>)</h2>
+            <span class="ce6-badge" title="Verificado por test automático CE6: ni audit.jsonl ni este endpoint almacenan textos ni PII original">
+              GARANTÍA CE6: CERO VALORES ORIGINALES ALMACENADOS
+            </span>
+          </div>
+          <p class="audit-subtitle">
+            Cada fila registra exclusivamente metadatos operativos: <code>timestamp</code>, <code>request_id</code>, <code>session_id</code>, <code>mode</code>, <code>result</code>, conteos por tipo y coordenadas <code>start..end</code>.
+          </p>
+        </div>
+        <div class="audit-actions">
+          <button type="button" id="btn-refresh-audit" class="btn btn-secondary btn-sm">
+            Actualizar Audit Log
+          </button>
+        </div>
+      </header>
+
+      <div class="audit-table-wrapper">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th scope="col">Timestamp (UTC)</th>
+              <th scope="col">Request ID</th>
+              <th scope="col">Sesión</th>
+              <th scope="col">Modo</th>
+              <th scope="col">Resultado</th>
+              <th scope="col">Conteos por Tipo (<code>counts_by_type</code>)</th>
+              <th scope="col">Spans Registrados (Solo <code>start..end</code> y Capa)</th>
+              <th scope="col">Latencia (ms)</th>
+            </tr>
+          </thead>
+          <tbody id="audit-table-body">
+            <tr>
+              <td colspan="8" class="audit-empty-row">
+                Cargando registros de auditoría desde <code>/v1/tapaito/audit?limit=20</code>…
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

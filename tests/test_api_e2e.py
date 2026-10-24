@@ -112,3 +112,27 @@ async def test_openai_sdk_client_works_changing_only_base_url_ce1() -> None:
     assert "⟦RADICADO_1⟧" in tapaito_meta["masked_prompt"]
     assert tapaito_meta["reinsertion_report"]["tasa_restauracion"] >= 0.95
 
+
+def test_ui_split_screen_and_static_assets_f5() -> None:
+    """Verifica que GET /ui y /ui/static/* sirven la interfaz de pantalla dividida de Fase 5."""
+    app = create_app()
+    client = TestClient(app)
+
+    r_ui = client.get("/ui")
+    assert r_ui.status_code == 200
+    html = r_ui.text
+    assert "/ui/static/styles.css" in html
+    assert "/ui/static/app.js" in html
+    assert "reduce la exposición de datos personales" in html
+
+    r_css = client.get("/ui/static/styles.css")
+    assert r_css.status_code == 200
+    assert "#0D9488" in r_css.text or "#0d9488" in r_css.text
+
+    r_js = client.get("/ui/static/app.js")
+    assert r_js.status_code == 200
+    assert "/v1/tapaito/preview" in r_js.text
+    assert "/v1/chat/completions" in r_js.text
+    assert "/v1/tapaito/audit" in r_js.text
+
+

@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+.env
+audit.jsonl
+*.log
+.superpowers/

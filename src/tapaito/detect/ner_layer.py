@@ -101,7 +101,7 @@ MEDICAL_STOPLIST: frozenset[str] = frozenset(
         "fosyga",
         "adres",
         "sisben",
-        # Encabezados y etiquetas documentales clínicas/jurídicas (F4.T1 dev tuning)
+        # Encabezados y etiquetas documentales clínicas/jurídicas colombianas
         "historia clinica",
         "historia clinica de evolucion",
         "epicrisis de egreso",

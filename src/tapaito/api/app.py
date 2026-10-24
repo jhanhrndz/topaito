@@ -1,4 +1,4 @@
-"""Aplicacion principal FastAPI de Tapaito (sin tocar archivos de UI de Fase 5)."""
+"""Aplicación principal FastAPI de Tapaito."""
 
 from __future__ import annotations
 
@@ -88,7 +88,7 @@ def create_app() -> FastAPI:
             ],
         }
 
-    # Montaje dinamico de /ui y /ui/static para permitir sincronizacion via git pull en Fase 5
+    # Montaje de /ui y /ui/static para la interfaz de auditoría clínica
     ui_dir = Path(__file__).resolve().parent.parent / "ui"
     if ui_dir.exists():
         app.mount("/ui/static", StaticFiles(directory=str(ui_dir)), name="ui_static")
@@ -100,7 +100,7 @@ def create_app() -> FastAPI:
             return FileResponse(str(index_file))
         return HTMLResponse(
             content="<!doctype html><html><head><meta charset='utf-8'><title>Tapaito UI</title></head>"
-            "<body><h1>Tapaito Proxy Activo</h1><p>UI pendiente de sincronizacion en Fase 5.</p></body></html>",
+            "<body><h1>Tapaito Proxy Activo</h1><p>Estación de auditoría clínica activa.</p></body></html>",
             status_code=200,
         )
 

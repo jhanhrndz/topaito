@@ -1,6 +1,6 @@
 # Comparativa Honesta con Alternativas Abiertas (`COMPARISON.md`)
 
-> **Regla de rigor (§12 y §14 de `TAPAITO.md`):** Esta comparativa evalúa a **Tapaito** frente a herramientas de código abierto existentes en el ecosistema de protección de PII para LLMs. No se inventan capacidades ni carencias; cualquier aspecto que dependa de configuraciones no documentadas de forma estándar se indica explícitamente como `"no verificado"` o `"requiere desarrollo a medida"`.
+> **Regla de rigor:** Esta comparativa evalúa a **Tapaito** frente a herramientas de código abierto existentes en el ecosistema de protección de PII para LLMs. No se inventan capacidades ni carencias; cualquier aspecto que dependa de configuraciones no documentadas de forma estándar se indica explícitamente como `"no verificado"` o `"requiere desarrollo a medida"`.
 
 ---
 

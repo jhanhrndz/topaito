@@ -1,6 +1,6 @@
 # Guion Oficial de Demostración en Vivo y Offline (90 Segundos)
 
-> **Propósito:** Este documento contiene el guion cronometrado de **90 segundos** (dividido en los 6 bloques de la §15 de `TAPAITO.md`), las acciones exactas sobre la interfaz `/ui` (**Estación de Auditoría Clínica Colombiana**), los textos clínicos sintéticos de respaldo y el procedimiento para ejecutar la demostración **100 % sin conexión a internet** (CE8).
+> **Propósito:** Este documento contiene el guion cronometrado de **90 segundos** (dividido en 6 bloques cronometrados), las acciones exactas sobre la interfaz `/ui` (**Estación de Auditoría Clínica Colombiana**), los textos clínicos sintéticos de respaldo y el procedimiento para ejecutar la demostración **100 % sin conexión a internet** (CE8).
 
 ---
 

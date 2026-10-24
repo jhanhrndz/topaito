@@ -113,8 +113,8 @@ async def test_openai_sdk_client_works_changing_only_base_url_ce1() -> None:
     assert tapaito_meta["reinsertion_report"]["tasa_restauracion"] >= 0.95
 
 
-def test_ui_split_screen_and_static_assets_f5() -> None:
-    """Verifica que GET /ui y /ui/static/* sirven la interfaz de pantalla dividida de Fase 5."""
+def test_ui_split_screen_and_static_assets() -> None:
+    """Verifica que GET /ui y /ui/static/* sirven la interfaz de pantalla dividida."""
     app = create_app()
     client = TestClient(app)
 

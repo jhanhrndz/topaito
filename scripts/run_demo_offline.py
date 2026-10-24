@@ -1,6 +1,6 @@
 """Script de respaldo offline para reproducir la demo completa de 90 segundos (CE8).
 
-Ejecuta los 4 escenarios del guion de demo (§15 de TAPAITO.md) sin depender de internet:
+Ejecuta los 4 escenarios del guion de demo (docs/DEMO.md) sin depender de internet:
 1. Caso clinico con identificadores colombianos (CC, NIT con DV DIAN, celular, correo, direccion y codigos medicos CUPS/medicamentos POS) en Modo Rapido -> Preview y Chat Completion con reinsercion.
 2. Caso con residuo sutil (nombre en minusculas sin etiqueta estandar) + cuasi-identificador en Modo Estricto -> Verificador local Qwen3 4B (o simulacion determinista si Ollama no responde) atrapa el residuo, lo reenmascara y emite advertencia.
 3. Caso con respuesta hostil del LLM (corchetes y minusculas alteradas + token desconocido) -> Reinsercion tolerante e informe explicito.

@@ -1,10 +1,10 @@
 # Trabajo Futuro y Elementos Fuera del Alcance del MVP (`FUTURE.md`)
 
-> Siguiendo la sección 5 de [`TAPAITO.md`](file:///C:/Users/jchrn/Documents/Trabajos/Personal/hacktoberfest/TAPAITO.md) (*Regla anti-alcance*), todo elemento que no mapea a los requisitos funcionales RF1–RF13 del MVP se documenta aquí como evolución futura.
+> Este documento recopila los elementos identificados que están fuera del alcance del MVP y forman parte de la hoja de ruta de evolución futura.
 
 ---
 
-## 1. Funcionalidades Declaradas Fuera del Alcance del MVP (§5)
+## 1. Funcionalidades Declaradas Fuera del Alcance del MVP
 
 1. **Soporte de Streaming SSE (`stream: true` en `/v1/chat/completions`):**
    - *Motivo de exclusión:* La reinserción tolerante de tokens (`⟦PERSONA_1⟧`, `[persona_1]`) requiere un buffer de ventana deslizante sobre los chunks SSE para no cortar un token a mitad de emisión. En el MVP se opera con respuestas completas sin streaming.

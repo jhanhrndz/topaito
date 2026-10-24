@@ -1,0 +1,194 @@
+{
+  "num_cases": 12,
+  "mean_reinsertion_rate": 1.0,
+  "ce4_passed": true,
+  "clinical_field_preservation_rate": 1.0,
+  "rubric_breakdown": {
+    "age_preservation_rate": 1.0,
+    "cie10_preservation_rate": 1.0,
+    "medication_preservation_rate": 1.0,
+    "identifiers_restoration_rate": 1.0
+  },
+  "cases": [
+    {
+      "case_id": "dev_001",
+      "genre": "historia_clinica",
+      "entities_masked": 10,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 71 años.\n- Diagnósticos CIE-10: M5",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: HISTORIA CLÍNICA DE EVOLUCIÓN. Paciente, Carlos Alberto Ospina Jaramillo, C.C, 984.475.5"
+    },
+    {
+      "case_id": "dev_002",
+      "genre": "epicrisis",
+      "entities_masked": 9,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 64 años.\n- Diagnósticos CIE-10: N3",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: Egreso, Natalia Sofía Castañeda Ríos, 18 de agosto de 1955, Barranquilla, Atendido, Andr"
+    },
+    {
+      "case_id": "dev_003",
+      "genre": "orden_medica",
+      "entities_masked": 7,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 38 años.\n- Diagnósticos CIE-10: M5",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: MÉDICA AMBULATORIA, Diana Marcela Cárdenas Mejía, 201.274.129, diana.mejia18@correo.co, "
+    },
+    {
+      "case_id": "dev_007",
+      "genre": "epicrisis",
+      "entities_masked": 9,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 29 años.\n- Diagnósticos CIE-10: E1",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: Egreso, Carlos Alberto Quintero Henao, 7 de julio de 1971, Bogotá, Atendido, Natalia Sof"
+    },
+    {
+      "case_id": "dev_008",
+      "genre": "orden_medica",
+      "entities_masked": 9,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 24 años.\n- Diagnósticos CIE-10: K2",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: MÉDICA AMBULATORIA, Paula Andrea Giraldo Aristizábal, 1.076.411.460, paula.aristizabal71"
+    },
+    {
+      "case_id": "dev_010",
+      "genre": "seguimiento_paciente",
+      "entities_masked": 6,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 57 años.\n- Diagnósticos CIE-10: K2",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: Andrés Felipe Montoya Salazar, +57 311.719.2787, Diagonal 136A # 73-85 Apto 158, 990-541"
+    },
+    {
+      "case_id": "dev_011",
+      "genre": "historia_clinica",
+      "entities_masked": 11,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 25 años.\n- Diagnósticos CIE-10: N3",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: HISTORIA CLÍNICA DE EVOLUCIÓN. Paciente, Natalia Sofía Cárdenas Mejía, C.C, 942.927.577,"
+    },
+    {
+      "case_id": "dev_012",
+      "genre": "epicrisis",
+      "entities_masked": 9,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 36 años.\n- Diagnósticos CIE-10: K2",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: Egreso, Camilo Ernesto Ospina Jaramillo, 7 de octubre de 1999, Cali, Atendido, Camilo Er"
+    },
+    {
+      "case_id": "dev_013",
+      "genre": "orden_medica",
+      "entities_masked": 7,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 35 años.\n- Diagnósticos CIE-10: K2",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: MÉDICA AMBULATORIA, Diana Marcela Castañeda Ríos, 757.886.093, diana.rios55@saludpacient"
+    },
+    {
+      "case_id": "dev_014",
+      "genre": "tutela_salud",
+      "entities_masked": 9,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 25 años.\n- Diagnósticos CIE-10: J1",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: CUMPLIMIENTO DE, TUTELA, SALUD, Radicado, 08001-31-89-031-2019-09178-01, María Fernanda "
+    },
+    {
+      "case_id": "dev_016",
+      "genre": "historia_clinica",
+      "entities_masked": 9,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 36 años.\n- Diagnósticos CIE-10: K2",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: HISTORIA CLÍNICA DE EVOLUCIÓN. Paciente, Laura Valentina Castañeda Ríos, 958715443, 3107"
+    },
+    {
+      "case_id": "dev_018",
+      "genre": "orden_medica",
+      "entities_masked": 7,
+      "reinsertion_rate": 1.0,
+      "rubric": {
+        "age_preserved": true,
+        "cie10_preserved": true,
+        "medication_preserved": true,
+        "identifiers_restored": true,
+        "score": 1.0
+      },
+      "baseline_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: sin identificadores enmascarados).\n- Edad registrada: 63 años.\n- Diagnósticos CIE-10: E1",
+      "restored_excerpt": "Resumen Clínico Automatizado (Entidades vinculadas: MÉDICA AMBULATORIA, María Fernanda Ospina Jaramillo, 299055686, maria.jaramillo18@correo"
+    }
+  ]
+}

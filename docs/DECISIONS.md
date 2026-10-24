@@ -31,3 +31,16 @@
 - **Contexto:** Un segundo agente de IA construirá en paralelo la interfaz visual y el guion de demo (`src/tapaito/ui/index.html`, `src/tapaito/ui/styles.css`, `src/tapaito/ui/app.js`, `docs/DEMO.md`), que se integrarán mediante `git pull` al pasar de la Fase 4 a la Fase 5.
 - **Decisión:** Congelar el contrato JSON de `/v1/tapaito/preview`, `/v1/chat/completions`, `/v1/tapaito/audit` y `DELETE /v1/tapaito/session/{id}` en `PLAN.md` y `docs/UI_AGENT_PROMPT.md`. En `src/tapaito/api/app.py`, servir `src/tapaito/ui/index.html` dinámicamente si existe en disco y un fallback en memoria mientras llega el `git pull` de Fase 5, evitando cualquier conflicto de merge.
 - **Alternativa descartada:** Crear archivos placeholder en `src/tapaito/ui/` durante Fase 0, lo que produciría conflictos de `git pull` cuando el agente externo suba sus archivos.
+
+---
+
+## D3 — Trade-off Precisión/Recall en Cédula Colombiana + Barrido de Sesión (Fase 1)
+
+- **Fecha / Fase:** 2026-10-24 — Fase 1 (`F1.T1` y `F1.T2`)
+- **Contexto (§7 Notas Técnicas, R8, R16):** La cédula de ciudadanía colombiana (6 a 10 dígitos) no tiene dígito de verificación público. En textos clínicos abundan números de 6 a 10 dígitos que **no** son documentos de identidad (códigos CUPS de 6 dígitos como `890201`, registros INVIMA, números de lote, órdenes de laboratorio o dosis altas en `UI`/`ml`).
+- **Decisión:**
+  1. En `validators.py::has_cedula_context`, evaluar primero una ventana de **contexto negativo inmediato** (`CUPS`, `CIE-10`, `lote`, `INVIMA`, `orden #`, `cama`, `habitación`, y unidades pospuestas `mg`, `ml`, `mcg`, `UI`, `mmHg`, etc.).
+  2. Exigir **contexto positivo** (`cédula`, `CC`, `C.C.`, `documento`, `identificación`, `portador`, `DNI`, `T.I.`) en una ventana de 45 caracteres previos / 25 posteriores (cortada en signos de puntuación `;`/`.` para no contaminar oraciones contiguas), **o** formato explícito con puntos de miles colombianos (`1.032.456.789` o `79.456.123`).
+  3. Combinar lo anterior con el **Barrido de Sesión (*Second-Pass Session Sweep*)** en `masker.py`: una vez que la cédula se detecta con contexto al inicio del documento o sesión, cualquier aparición posterior del mismo número limpio (incluso sin `"CC"` ni puntos) se enmascara automáticamente con el mismo token `⟦CEDULA_1⟧`.
+- **Alternativa descartada:** Enmascarar cualquier número de 6–10 dígitos sin contexto, lo cual destruye la utilidad clínica al ocultar códigos CUPS, lotes y valores de laboratorio.
+

@@ -101,6 +101,37 @@ MEDICAL_STOPLIST: frozenset[str] = frozenset(
         "fosyga",
         "adres",
         "sisben",
+        # Encabezados y etiquetas documentales clínicas/jurídicas (F4.T1 dev tuning)
+        "historia clinica",
+        "historia clinica de evolucion",
+        "epicrisis de egreso",
+        "orden medica",
+        "orden medica ambulatoria",
+        "medica ambulatoria",
+        "solicitud de cumplimiento",
+        "cumplimiento de",
+        "tutela",
+        "tutela en salud",
+        "salud",
+        "radicado",
+        "asegurador",
+        "entidad",
+        "egreso",
+        "ingreso",
+        "cuadro",
+        "atendido",
+        "continuar",
+        "prescripcion",
+        "seguimiento",
+        "reembolso",
+        "nota de seguimiento",
+        "c.c",
+        "cc",
+        "nit",
+        "telefono",
+        "celular",
+        "correo",
+        "direccion",
     }
 )
 
@@ -168,6 +199,36 @@ _CLINICAL_NON_NAME_WORDS: frozenset[str] = frozenset(
         "positivo",
         "normal",
         "pendiente",
+        "actual",
+        "unico",
+        "unica",
+        "titular",
+        "municipal",
+        "departamental",
+        "alcalde",
+        "alcaldesa",
+        "personero",
+        "personera",
+        "juez",
+        "jueza",
+        "rector",
+        "rectora",
+        "director",
+        "directora",
+        "continuar",
+        "iniciar",
+        "suspender",
+        "administrar",
+        "formular",
+        "ordenar",
+        "ambulatoria",
+        "ambulatorio",
+        "cumplimiento",
+        "solicitud",
+        "asegurador",
+        "egreso",
+        "atendido",
+        "cuadro",
     }
 )
 
@@ -231,6 +292,10 @@ def is_filtered_clinical_span(raw_text: str) -> bool:
 
     tokens = norm.split()
     if tokens[0] in MEDICAL_STOPLIST:
+        return True
+    if tokens[0] in _CLINICAL_NON_NAME_WORDS and tokens[0] not in ("clinica", "hospital", "centro", "fundacion"):
+        return True
+    if norm.startswith("historia clinica"):
         return True
     if all(tok in MEDICAL_STOPLIST or tok in _CLINICAL_NON_NAME_WORDS for tok in tokens):
         return True

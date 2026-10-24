@@ -44,3 +44,13 @@
   3. Combinar lo anterior con el **Barrido de Sesión (*Second-Pass Session Sweep*)** en `masker.py`: una vez que la cédula se detecta con contexto al inicio del documento o sesión, cualquier aparición posterior del mismo número limpio (incluso sin `"CC"` ni puntos) se enmascara automáticamente con el mismo token `⟦CEDULA_1⟧`.
 - **Alternativa descartada:** Enmascarar cualquier número de 6–10 dígitos sin contexto, lo cual destruye la utilidad clínica al ocultar códigos CUPS, lotes y valores de laboratorio.
 
+---
+
+## D4 — Refinamiento de Filtros Clínicos NER Guiado Exclusivamente por `dev` (Fase 4)
+
+- **Fecha / Fase:** 2026-10-24 — Fase 4 (`F4.T1`)
+- **Contexto (§10, R4, R8):** Al evaluar inicialmente el conjunto `bench/data/dev/dataset.jsonl` (30 casos, sin tocar `test`), la Configuración B (`rapido_regex_ner`) logró Recall Estructurado de `1.0000` (CE2) y Recall Global de `0.9401`, pero obtuvo una Precisión Global de `0.6797` debido a 65 falsos positivos de `es_core_news_md` sobre encabezados documentales en mayúsculas (`HISTORIA CLÍNICA DE EVOLUCIÓN`, `ORDEN MÉDICA AMBULATORIA`, `CUMPLIMIENTO DE`, `TUTELA`, `SALUD`, `Radicado`, `Asegurador`, `Egreso`, `Atendido`, `Cuadro`) y verbos de prescripción (`Continuar Metformina`).
+- **Decisión:** Ampliar `MEDICAL_STOPLIST` y `_CLINICAL_NON_NAME_WORDS` en `src/tapaito/detect/ner_layer.py` para descartar encabezados documentales y verbos de prescripción clínica, preservando intacta la detección de nombres de instituciones de salud reales (`Clínica ...`, `Hospital ...`, `Fundación ...`). Tras el ajuste, los falsos positivos en `dev` bajaron de `65` a `0` sin haber leído ni modificado jamás `bench/data/test/dataset.jsonl` (cuyo hash SHA-256 `1d4edee3c11e3773879f1ed095a8ae5dc01dea5a0d2671851edd2b8e76d9bace` se verificó intacto).
+- **Alternativa descartada:** Desactivar las etiquetas `ORG` o `LOC` de spaCy por completo, lo que habría reducido el recall sobre nombres de clínicas/EPS y municipios.
+
+

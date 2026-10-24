@@ -6,10 +6,10 @@
   "quasi_identifier_cases_count": 4,
   "ce2_structured_recall_rapido": 1.0,
   "ce2_passed": true,
-  "ce3_residuals_recovered": 7,
+  "ce3_residuals_recovered": 11,
   "ce3_leaks_reduced": 7,
   "ce3_passed": true,
-  "config_c_quasi_warnings_detected": 0,
+  "config_c_quasi_warnings_detected": 1,
   "config_c_verifier_errors": 0,
   "configs": {
     "A_regex_only": {
@@ -301,9 +301,9 @@
       "total_gold_entities": 167,
       "residual_leak_rate": 0.3892,
       "latency_ms": {
-        "p50": 0.89,
-        "p95": 1.63,
-        "mean": 1.05
+        "p50": 0.82,
+        "p95": 1.38,
+        "mean": 0.85
       }
     },
     "B_rapido_regex_ner": {
@@ -311,19 +311,19 @@
       "global": {
         "exact": {
           "tp": 157,
-          "fp": 74,
+          "fp": 3,
           "fn": 10,
-          "precision": 0.6797,
+          "precision": 0.9812,
           "recall": 0.9401,
-          "f1": 0.7889
+          "f1": 0.9602
         },
         "overlap": {
           "tp": 157,
-          "fp": 74,
+          "fp": 3,
           "fn": 10,
-          "precision": 0.6797,
+          "precision": 0.9812,
           "recall": 0.9401,
-          "f1": 0.7889
+          "f1": 0.9602
         }
       },
       "structured": {
@@ -460,22 +460,22 @@
         },
         "PERSONA": {
           "gold_count": 43,
-          "pred_count": 57,
+          "pred_count": 37,
           "exact": {
             "tp": 36,
-            "fp": 21,
+            "fp": 1,
             "fn": 7,
-            "precision": 0.6316,
+            "precision": 0.973,
             "recall": 0.8372,
-            "f1": 0.72
+            "f1": 0.9
           },
           "overlap": {
             "tp": 36,
-            "fp": 21,
+            "fp": 1,
             "fn": 7,
-            "precision": 0.6316,
+            "precision": 0.973,
             "recall": 0.8372,
-            "f1": 0.72
+            "f1": 0.9
           },
           "leaked_count": 7,
           "residual_leak_rate": 0.1628
@@ -504,44 +504,44 @@
         },
         "UBICACION": {
           "gold_count": 10,
-          "pred_count": 28,
+          "pred_count": 11,
           "exact": {
             "tp": 9,
-            "fp": 19,
+            "fp": 2,
             "fn": 1,
-            "precision": 0.3214,
+            "precision": 0.8182,
             "recall": 0.9,
-            "f1": 0.4737
+            "f1": 0.8571
           },
           "overlap": {
             "tp": 9,
-            "fp": 19,
+            "fp": 2,
             "fn": 1,
-            "precision": 0.3214,
+            "precision": 0.8182,
             "recall": 0.9,
-            "f1": 0.4737
+            "f1": 0.8571
           },
           "leaked_count": 0,
           "residual_leak_rate": 0.0
         },
         "ORGANIZACION": {
           "gold_count": 12,
-          "pred_count": 44,
+          "pred_count": 10,
           "exact": {
             "tp": 10,
-            "fp": 34,
+            "fp": 0,
             "fn": 2,
-            "precision": 0.2273,
+            "precision": 1.0,
             "recall": 0.8333,
-            "f1": 0.3571
+            "f1": 0.9091
           },
           "overlap": {
             "tp": 10,
-            "fp": 34,
+            "fp": 0,
             "fn": 2,
-            "precision": 0.2273,
+            "precision": 1.0,
             "recall": 0.8333,
-            "f1": 0.3571
+            "f1": 0.9091
           },
           "leaked_count": 0,
           "residual_leak_rate": 0.0
@@ -595,9 +595,9 @@
       "total_gold_entities": 167,
       "residual_leak_rate": 0.0419,
       "latency_ms": {
-        "p50": 12.04,
-        "p95": 19.29,
-        "mean": 41.85
+        "p50": 12.24,
+        "p95": 18.17,
+        "mean": 42.17
       }
     },
     "C_estricto_qwen": {
@@ -605,19 +605,19 @@
       "global": {
         "exact": {
           "tp": 164,
-          "fp": 74,
+          "fp": 7,
           "fn": 3,
-          "precision": 0.6891,
+          "precision": 0.9591,
           "recall": 0.982,
-          "f1": 0.8099
+          "f1": 0.9704
         },
         "overlap": {
           "tp": 164,
-          "fp": 74,
+          "fp": 7,
           "fn": 3,
-          "precision": 0.6891,
+          "precision": 0.9591,
           "recall": 0.982,
-          "f1": 0.8099
+          "f1": 0.9704
         }
       },
       "structured": {
@@ -754,22 +754,22 @@
         },
         "PERSONA": {
           "gold_count": 43,
-          "pred_count": 64,
+          "pred_count": 44,
           "exact": {
             "tp": 43,
-            "fp": 21,
+            "fp": 1,
             "fn": 0,
-            "precision": 0.6719,
+            "precision": 0.9773,
             "recall": 1.0,
-            "f1": 0.8037
+            "f1": 0.9885
           },
           "overlap": {
             "tp": 43,
-            "fp": 21,
+            "fp": 1,
             "fn": 0,
-            "precision": 0.6719,
+            "precision": 0.9773,
             "recall": 1.0,
-            "f1": 0.8037
+            "f1": 0.9885
           },
           "leaked_count": 0,
           "residual_leak_rate": 0.0
@@ -798,44 +798,44 @@
         },
         "UBICACION": {
           "gold_count": 10,
-          "pred_count": 28,
+          "pred_count": 11,
           "exact": {
             "tp": 9,
-            "fp": 19,
+            "fp": 2,
             "fn": 1,
-            "precision": 0.3214,
+            "precision": 0.8182,
             "recall": 0.9,
-            "f1": 0.4737
+            "f1": 0.8571
           },
           "overlap": {
             "tp": 9,
-            "fp": 19,
+            "fp": 2,
             "fn": 1,
-            "precision": 0.3214,
+            "precision": 0.8182,
             "recall": 0.9,
-            "f1": 0.4737
+            "f1": 0.8571
           },
           "leaked_count": 0,
           "residual_leak_rate": 0.0
         },
         "ORGANIZACION": {
           "gold_count": 12,
-          "pred_count": 44,
+          "pred_count": 10,
           "exact": {
             "tp": 10,
-            "fp": 34,
+            "fp": 0,
             "fn": 2,
-            "precision": 0.2273,
+            "precision": 1.0,
             "recall": 0.8333,
-            "f1": 0.3571
+            "f1": 0.9091
           },
           "overlap": {
             "tp": 10,
-            "fp": 34,
+            "fp": 0,
             "fn": 2,
-            "precision": 0.2273,
+            "precision": 1.0,
             "recall": 0.8333,
-            "f1": 0.3571
+            "f1": 0.9091
           },
           "leaked_count": 0,
           "residual_leak_rate": 0.0
@@ -889,9 +889,9 @@
       "total_gold_entities": 167,
       "residual_leak_rate": 0.0,
       "latency_ms": {
-        "p50": 3051.21,
-        "p95": 7786.9,
-        "mean": 3495.68
+        "p50": 4241.89,
+        "p95": 7309.37,
+        "mean": 3807.61
       }
     }
   }

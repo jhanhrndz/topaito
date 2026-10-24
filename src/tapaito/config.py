@@ -16,7 +16,7 @@ class Settings:
     upstream_model: str = "tapaito-mock"
     ollama_base_url: str = "http://127.0.0.1:11434"
     ollama_model: str = "qwen3:4b"
-    verifier_timeout_s: float = 20.0
+    verifier_timeout_s: float = 35.0
     max_verify_chars: int = 1800
     session_ttl_seconds: int = 1800
     audit_log_path: Path = Path("audit.jsonl")
@@ -31,7 +31,7 @@ class Settings:
             upstream_model=os.getenv("UPSTREAM_MODEL", "tapaito-mock"),
             ollama_base_url=os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434"),
             ollama_model=os.getenv("OLLAMA_MODEL", "qwen3:4b"),
-            verifier_timeout_s=float(os.getenv("TAPAITO_VERIFIER_TIMEOUT_S", "20.0")),
+            verifier_timeout_s=float(os.getenv("TAPAITO_VERIFIER_TIMEOUT_S", "35.0")),
             max_verify_chars=int(os.getenv("TAPAITO_MAX_VERIFY_CHARS", "1800")),
             session_ttl_seconds=int(os.getenv("TAPAITO_SESSION_TTL_S", "1800")),
             audit_log_path=Path(os.getenv("TAPAITO_AUDIT_LOG_PATH", "audit.jsonl")),

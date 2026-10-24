@@ -58,10 +58,10 @@ SYSTEM_PROMPT: str = (
     "Reglas de auditoría:\n"
     "1. Ignora todos los marcadores ya enmascarados con formato ⟦...⟧ e ignora medicamentos, "
     "dosis farmacológicas, escalas médicas y códigos clínicos (CIE-10, CUPS).\n"
-    "2. Reporta en 'residuos' únicamente datos personales identificables que hayan quedado visibles "
-    "sin enmascarar en el texto (nombres de personas, números de cédula/documento, NIT, teléfonos "
-    "celulares, correos electrónicos o direcciones exactas). Copia en 'texto' el fragmento exacto "
-    "tal como aparece en el texto auditado.\n"
+    "2. Reporta en 'residuos' ÚNICAMENTE nombres propios de personas o datos personales identificables directos "
+    "que hayan quedado visibles sin enmascarar en el texto (por ejemplo nombres en minúsculas). "
+    "NUNCA reportes encabezados como 'SOLICITUD DE TUTELA EN SALUD' ni frases de trámite clínico como 'En caso de urgencia'. "
+    "Sé sumamente conciso; si no hay nombres propios sin enmascarar, devuelve 'residuos': [].\n"
     "3. Reporta en 'advertencias' cualquier cuasi-identificador (combinación de cargo único, "
     "profesión específica en municipio pequeño o condición rara que permita deducir la identidad "
     "por contexto aunque no aparezca el nombre propio).\n"
@@ -164,7 +164,7 @@ def _verify_single_chunk(
         "format": VERIFIER_JSON_SCHEMA,
         "options": {
             "temperature": 0,
-            "num_predict": 200,
+            "num_predict": 512,
             "num_ctx": 1536,
         },
     }
@@ -183,7 +183,11 @@ def _verify_single_chunk(
             content = body.get("message", {}).get("content", "")
             if not isinstance(content, str) or not content.strip():
                 raise ValueError("Contenido vacío en respuesta del verificador.")
-            parsed_data = json.loads(content)
+            clean_content = content.strip()
+            if clean_content.startswith("```"):
+                clean_content = re.sub(r"^```(?:json)?\s*", "", clean_content, flags=re.IGNORECASE)
+                clean_content = re.sub(r"\s*```$", "", clean_content)
+            parsed_data = json.loads(clean_content)
             return VerifierOutput.model_validate(parsed_data)
         except (ValueError, ValidationError, KeyError, TypeError) as exc:
             if attempt == 0:
